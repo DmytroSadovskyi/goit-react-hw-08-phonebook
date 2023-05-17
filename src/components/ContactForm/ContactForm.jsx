@@ -1,41 +1,22 @@
-import { Formik, Field, getIn } from 'formik';
+import { Formik, Field } from 'formik';
 import toast, { Toaster } from 'react-hot-toast';
 import * as Yup from 'yup';
 import 'yup-phone-lite';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/operations';
-import {
-  Form,
-  FormField,
-  Wrapper,
-  Input,
-  FormLabel,
-  ErrorMessage,
-  FormButton,
-  PersonIcon,
-  PhoneIcon,
-} from './ContactForm.styled';
 import { selectContacts } from 'redux/contacts/selectors';
+import { TextField, Button } from '@mui/material';
 
 const ContactSchema = Yup.object({
   name: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Name is required!'),
-  phone: Yup.string().phone('UA').required('Phone number is required!'),
+  number: Yup.string().phone('UA').required('Phone number is required!'),
 });
 export const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-
-  function getStyles(errors, touched, fieldName) {
-    if (getIn(errors, fieldName) && getIn(touched, fieldName)) {
-      return {
-        borderColor: 'red',
-      };
-    }
-    return {};
-  }
 
   return (
     <>
@@ -43,7 +24,7 @@ export const ContactForm = () => {
       <Formik
         initialValues={{
           name: '',
-          phone: '',
+          number: '',
         }}
         validationSchema={ContactSchema}
         onSubmit={({ ...values }, actions) => {
@@ -52,65 +33,60 @@ export const ContactForm = () => {
           );
           if (existingContact) {
             toast.error(
-              `You already have a ${existingContact.name} in your contacts!`
+              `You already have ${existingContact.name} in your contacts`
             );
             actions.resetForm();
           } else {
             dispatch(addContact({ ...values }));
-
             actions.resetForm();
           }
         }}
       >
-        {formikProps => (
-          <Form>
-            <FormField>
-              <FormLabel htmlFor="name">Name</FormLabel>
-              <Wrapper>
-                <Field
-                  name="name"
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      placeholder="your name"
-                      id="name"
-                      style={getStyles(
-                        formikProps.errors,
-                        formikProps.touched,
-                        'name'
-                      )}
-                    />
-                  )}
+        {({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <Field name="name">
+              {({ field, form: { touched, errors } }) => (
+                <TextField
+                  {...field}
+                  label="name"
+                  variant="outlined"
+                  error={touched.name && Boolean(errors.name)}
+                  helperText={touched.name && errors.name}
+                  fullWidth
+                  margin="normal"
+                  autoComplete="off"
+                  size="small"
                 />
-                <PersonIcon />
-              </Wrapper>
-              <ErrorMessage name="name" component="div" />
-            </FormField>
-            <FormField>
-              <FormLabel htmlFor="number">Number</FormLabel>
-              <Wrapper>
-                <Field
-                  name="phone"
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      placeholder="+38-0XX-XXX-XX-XX"
-                      id="number"
-                      style={getStyles(
-                        formikProps.errors,
-                        formikProps.touched,
-                        'phone'
-                      )}
-                    />
-                  )}
-                />
-                <PhoneIcon />
-              </Wrapper>
-              <ErrorMessage name="phone" component="div" />
-            </FormField>
+              )}
+            </Field>
 
-            <FormButton type="submit">Add contact</FormButton>
-          </Form>
+            <Field name="number">
+              {({ field, form: { touched, errors } }) => (
+                <TextField
+                  {...field}
+                  label="Number"
+                  variant="outlined"
+                  error={touched.number && Boolean(errors.number)}
+                  helperText={touched.number && errors.number}
+                  fullWidth
+                  margin="normal"
+                  autoComplete="off"
+                  size="small"
+                  sx={{ mb: 2 }}
+                />
+              )}
+            </Field>
+
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              sx={{ mb: 4 }}
+              fullWidth
+            >
+              Add contact
+            </Button>
+          </form>
         )}
       </Formik>
     </>
