@@ -6,14 +6,14 @@ export const StyledLink = styled(NavLink)`
   text-decoration: none;
   padding: 12px;
   font-weight: 700;
-  font-size: 10px;
+  font-size: 14px;
   @media screen and (min-width: 420px) {
-    font-size: 16px;
+    font-size: 20px;
   }
   font-weight: 700;
-  color: white;
+  color: black;
 
   &.active {
-    color: black;
+    color: white;
   }
 `;
