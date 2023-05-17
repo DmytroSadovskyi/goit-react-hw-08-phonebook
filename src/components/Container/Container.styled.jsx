@@ -1,10 +1,13 @@
 import styled from '@emotion/styled';
 
 export const Div = styled.div`
-  width: 310px;
+  @media screen and (min-width: 0px) {
+    max-width: 444px;
+  }
+
   margin: 0 auto;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 16px;
+  padding-left: 16px;
   padding-top: 20px;
   padding-bottom: 20px;
 `;
