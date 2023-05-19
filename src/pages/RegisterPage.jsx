@@ -12,7 +12,7 @@ const RegisterPage = () => {
           <RegisterForm />
           {error && (
             <p style={{ color: 'red', marginTop: '5px', textAlign: 'center' }}>
-              Ooops, something went wrong... Please, try again
+              Oops, something went wrong... Please, try again
             </p>
           )}
         </Container>
