@@ -17,7 +17,7 @@ const LoginPage = () => {
                 textAlign: 'center',
               }}
             >
-              Ooops, something went wrong... Please, try again
+              Oops, something went wrong... Please, try again
             </p>
           )}
         </Container>
