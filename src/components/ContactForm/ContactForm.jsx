@@ -48,7 +48,7 @@ export const ContactForm = () => {
               {({ field, form: { touched, errors } }) => (
                 <TextField
                   {...field}
-                  label="name"
+                  label="Name"
                   variant="outlined"
                   error={touched.name && Boolean(errors.name)}
                   helperText={touched.name && errors.name}
