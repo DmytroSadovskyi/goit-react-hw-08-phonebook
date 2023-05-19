@@ -1,5 +1,4 @@
 import Container from 'components/Container/Container';
-import { MainTitle } from 'components/Container/Container.styled';
 import RegisterForm from 'components/RegisterForm/RegisterForm';
 
 const RegisterPage = () => {
@@ -7,7 +6,6 @@ const RegisterPage = () => {
     <main>
       <section>
         <Container>
-          <MainTitle>Register</MainTitle>
           <RegisterForm />
         </Container>
       </section>
